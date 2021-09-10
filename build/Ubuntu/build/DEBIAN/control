@@ -1,0 +1,10 @@
+Package:	ssl-check
+Version:	1.0.0
+Maintainer:	ZHUANGZHUANG <mail@zhuangzhuang.ml>
+Homepage:	https://zhuangzhuang.io
+Priority:	extra
+Section:	net
+Architecture:	amd64
+Provides:	ssl-check
+Suggests:	util-linux, gawk, grep, curl
+Description:	检查 SSL 证书颁发时间、到期时间
