@@ -155,7 +155,14 @@ error_msg(){
     echo -e "[\033[31;1m ERROR \033[0m] $(date +"%F %T.%5N") [ $(basename $0) ] -- $msg" && exit 1
 }
 
+check_sys(){
+    if uname | grep -qi Darwin; then
+        error_msg "此脚本不支持 MacOS 系统"
+    fi
+}
+
 main(){
+    check_sys
     tmp_dir=$PWD/$(basename $0)-tmp
     [ ! -d $tmp_dir ] && mkdir $tmp_dir
     trap "rm -rf $tmp_dir" EXIT INT
