@@ -8,7 +8,7 @@ timeout=${timeout:-10}
 timezone=${timezone:-Asia/Shanghai}
 
 author="<mail@zhuangzhuang,ml>"
-version=v1.0.0
+version=v1.0.1
 update=2021-09-10
 
 usage(){
@@ -136,7 +136,7 @@ check_ssl(){
         remaining_time_day=$[($ssl_expire_timestamp-$ssl_check_timestamp)/60/60/24]
         
         issuer_name=$(grep "issuer" $tmp | sed "s/.*issuer: //")
-        server_name=$(grep "subject:" $tmp | sed "s/.*CN=//")
+        server_name=$(grep "subject:" $tmp | sed "s/.*CN=//" | awk -F, '{print $1}')
         
         echo
         echo "检查域名: $domain"
@@ -155,7 +155,14 @@ error_msg(){
     echo -e "[\033[31;1m ERROR \033[0m] $(date +"%F %T.%5N") [ $(basename $0) ] -- $msg" && exit 1
 }
 
+check_sys(){
+    if uname | grep -qi Darwin; then
+        error_msg "此脚本不支持 MacOS 系统"
+    fi
+}
+
 main(){
+    check_sys
     tmp_dir=$PWD/$(basename $0)-tmp
     [ ! -d $tmp_dir ] && mkdir $tmp_dir
     trap "rm -rf $tmp_dir" EXIT INT
