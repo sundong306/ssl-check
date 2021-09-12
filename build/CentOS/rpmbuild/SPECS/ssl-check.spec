@@ -1,5 +1,5 @@
 Name:		ssl-check
-Version:	v1.0.0
+Version:	v1.0.1
 Release:	centos%{?dist}
 Summary:	检查 SSL 证书颁发时间、到期时间
 
